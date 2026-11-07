@@ -1,0 +1,110 @@
+chip soc/intel/alderlake
+
+	# GPE configuration
+	# Note that GPE events called out in ASL code rely on this
+	# route. i.e. If this route changes then the affected GPE
+	# offset bits also need to be changed.
+	register "pmc_gpe0_dw0" = "GPP_B"
+	register "pmc_gpe0_dw1" = "GPP_D"
+	register "pmc_gpe0_dw2" = "GPP_E"
+
+	# FSP configuration
+
+	# Disable EIST, S0ix and SaGV to ensure real-time performance
+	register "eist_enable" = "false"
+	register "s0ix_enable" = "false"
+	register "sagv" = "SaGv_Disabled"
+
+	register "usb2_ports[0]" = "USB2_PORT_MID(OC3)"		# Type-C Port1
+	register "usb2_ports[1]" = "USB2_PORT_MID(OC3)"		# Type-C Port2
+	register "usb2_ports[2]" = "USB2_PORT_MID(OC3)"		# FPS connector
+	register "usb2_ports[3]" = "USB2_PORT_MID(OC_SKIP)"	# M.2 WWAN
+	register "usb2_ports[4]" = "USB2_PORT_MID(OC3)"		# USB3/2 Type A port1
+	register "usb2_ports[5]" = "USB2_PORT_MID(OC1)"		# USB3/2 Type A port2
+	register "usb2_ports[6]" = "USB2_PORT_MID(OC1)"		# USB3/2 Type A port3
+	register "usb2_ports[7]" = "USB2_PORT_MID(OC_SKIP)"	# Type A/ M.2 WLAN
+	register "usb2_ports[9]" = "USB2_PORT_MID(OC_SKIP)"	# Bluetooth
+
+	register "usb3_ports[0]" = "USB3_PORT_DEFAULT(OC3)"	# USB3/2 Type A port1
+	register "usb3_ports[1]" = "USB3_PORT_DEFAULT(OC1)"	# USB3/2 Type A port2
+	register "usb3_ports[2]" = "USB3_PORT_DEFAULT(OC1)"	# USB3/2 Type A port3
+	register "usb3_ports[3]" = "USB3_PORT_DEFAULT(OC_SKIP)"	# M.2 WWAN
+
+	register "serial_io_i2c_mode" = "{
+		[PchSerialIoIndexI2C0] = PchSerialIoPci,
+		[PchSerialIoIndexI2C1] = PchSerialIoDisabled,
+		[PchSerialIoIndexI2C2] = PchSerialIoDisabled,
+		[PchSerialIoIndexI2C3] = PchSerialIoDisabled,
+		[PchSerialIoIndexI2C4] = PchSerialIoDisabled,
+		[PchSerialIoIndexI2C5] = PchSerialIoDisabled,
+	}"
+
+	register "serial_io_gspi_mode" = "{
+		[PchSerialIoIndexGSPI0] = PchSerialIoDisabled,
+		[PchSerialIoIndexGSPI1] = PchSerialIoDisabled,
+		[PchSerialIoIndexGSPI2] = PchSerialIoDisabled,
+		[PchSerialIoIndexGSPI3] = PchSerialIoDisabled,
+	}"
+
+	register "serial_io_uart_mode" = "{
+		[PchSerialIoIndexUART0] = PchSerialIoPci,
+		[PchSerialIoIndexUART1] = PchSerialIoSkipInit,
+		[PchSerialIoIndexUART2] = PchSerialIoDisabled,
+	}"
+
+	# Configure power limits
+	register "power_limits_config[ASL_041_9W_CORE]" = "{
+		.tdp_pl1_override = 12,
+		.tdp_pl2_override = 18,
+		.tdp_pl4 = 25,
+	}"
+
+	# Disable CState demotion in favour of realtime behaviour
+	register "disable_package_c_state_demotion" = "true"
+
+	# Configure PCIe clocks as free running
+	register "pcie_clk_config_flag[0]" = "PCIE_CLK_FREE_RUNNING"
+	register "pcie_clk_config_flag[1]" = "PCIE_CLK_FREE_RUNNING"
+	register "pcie_clk_config_flag[2]" = "PCIE_CLK_FREE_RUNNING"
+	register "pcie_clk_config_flag[3]" = "PCIE_CLK_FREE_RUNNING"
+	register "pcie_clk_config_flag[4]" = "PCIE_CLK_FREE_RUNNING"
+
+	device domain 0 on
+		device ref igpu off end
+		device ref xhci on end
+		device ref i2c0 on end
+		device ref heci1 on end
+		device ref pcie_rp1 on
+			register "pch_pcie_rp[PCH_RP(1)]" = "{
+				.clk_src = 2,
+				.flags = PCIE_RP_CLK_REQ_UNUSED | PCIE_CLK_FREE_RUNNING,
+			}"
+		end
+		device ref pcie_rp3 on
+			register "pch_pcie_rp[PCH_RP(3)]" = "{
+				.clk_src = 3,
+				.flags = PCIE_RP_CLK_REQ_UNUSED | PCIE_CLK_FREE_RUNNING,
+			}"
+		end
+		device ref pcie_rp7 on
+			register "pch_pcie_rp[PCH_RP(7)]" = "{
+				.clk_src = 0,
+				.flags = PCIE_RP_CLK_REQ_UNUSED | PCIE_CLK_FREE_RUNNING,
+			}"
+		end
+		device ref pcie_rp9 on
+			register "pch_pcie_rp[PCH_RP(9)]" = "{
+				.clk_src = 4,
+				.flags = PCIE_RP_CLK_REQ_UNUSED | PCIE_CLK_FREE_RUNNING,
+			}"
+		end
+		device ref pcie_rp11 on
+			register "pch_pcie_rp[PCH_RP(11)]" = "{
+				.clk_src = 1,
+				.flags = PCIE_RP_CLK_REQ_UNUSED | PCIE_CLK_FREE_RUNNING,
+			}"
+		end
+		device ref uart0 on end
+		device ref uart1 on end
+	end
+end

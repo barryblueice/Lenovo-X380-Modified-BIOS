@@ -1,0 +1,190 @@
+{
+  "status": "BUILT_VALIDATED_DELIVERED_NOT_FLASHED",
+  "image": "C:\\Users\\barryblueice\\x380-bios-analysis\\coreboot-ec-integrated\\coreboot.bin",
+  "sha256": "e11f266f5392f9872fdfbb3b83a7526c5e1c30adcf5b4236eaa17d63078c2c64",
+  "size": 16777216,
+  "firmware_label": "X380-Coreboot",
+  "custom_release_number_embedded": false,
+  "source_package": {
+    "vendor_bios": "R0SET57W / 1.41",
+    "vendor_ec": "R0SHT57W / 1.41",
+    "source": "I:\\Downloads\\20263110.17392147",
+    "capsule_sha256": "12ac19346eeddbda706b8ffd24d611e44a4dcaaf7fb04b54f319c13c2552cffd",
+    "ec_sha256": "98fdf30997cf29d1c4b0568617a880e5e776c6a758d98208a51533626d37da8e",
+    "components": {
+      "IntelGopDriver.efi": {
+        "size": 66912,
+        "sha256": "28cf9134a9ee73fc9280ad5aebe20b5df7d31af779253a5fd763dcdcc0015957",
+        "same_as_working_v10": true
+      },
+      "vbt.bin": {
+        "size": 4441,
+        "sha256": "ecebac5b0772797c348e516e47af38edb31e3892f0ac914cfea031e278be42cb",
+        "same_as_working_v10": true
+      }
+    },
+    "microcodes": [
+      {
+        "file": "406E3.PAT",
+        "cpuid": "0x406e3",
+        "revision": "0xba",
+        "date": "0x4092017",
+        "size": 98304
+      },
+      {
+        "file": "406E8.PAT",
+        "cpuid": "0x406e8",
+        "revision": "0x26",
+        "date": "0x4142016",
+        "size": 95232
+      },
+      {
+        "file": "506E8.PAT",
+        "cpuid": "0x506e8",
+        "revision": "0x34",
+        "date": "0x7102016",
+        "size": 96256
+      },
+      {
+        "file": "806E9.PAT",
+        "cpuid": "0x806e9",
+        "revision": "0x8e",
+        "date": "0x3242018",
+        "size": 98304
+      },
+      {
+        "file": "806EA.PAT",
+        "cpuid": "0x806ea",
+        "revision": "0x96",
+        "date": "0x5152018",
+        "size": 98304
+      }
+    ]
+  },
+  "coreboot_commit": "4f3d2b564c8675a05d555d27740d62e0257cbd5c",
+  "edk2_commit": "6c14abf865e093452edc775651df61775bf99c9f",
+  "configuration_changes": {
+    "removed": [
+      "CONFIG_LOCALVERSION=\"X380-Release-v10\"",
+      "CONFIG_INTEL_GMA_VBT_FILE=\"binaries/vbt.bin\"",
+      "CONFIG_EDK2_GOP_FILE=\"binaries/IntelGopDriver.efi\""
+    ],
+    "added": [
+      "CONFIG_LOCALVERSION=\"X380-Coreboot\"",
+      "CONFIG_INTEL_GMA_VBT_FILE=\"refresh-binaries/vbt.bin\"",
+      "CONFIG_EDK2_GOP_FILE=\"refresh-binaries/IntelGopDriver.efi\""
+    ]
+  },
+  "microcodes": [
+    {
+      "cpuid": "0x406e3",
+      "revision": "0xf0",
+      "date": "0x11122021",
+      "size": 106496
+    },
+    {
+      "cpuid": "0x806e9",
+      "revision": "0xf6",
+      "date": "0x2012024",
+      "size": 106496
+    },
+    {
+      "cpuid": "0x806e9",
+      "revision": "0xf6",
+      "date": "0x2012024",
+      "size": 106496
+    },
+    {
+      "cpuid": "0x806ea",
+      "revision": "0xf6",
+      "date": "0x2012024",
+      "size": 105472
+    }
+  ],
+  "me_version": "11.6.0.1126 Consumer LP deguard + HAP",
+  "me_sha256": "32b2f495c553d9e9d3d5feff1174f6839f6790b124f0accc232f05291ac69cc5",
+  "me_identical_to_working_v10": true,
+  "descriptor_gbe_mrc_nvram_identical_to_v10_build": true,
+  "graphics_and_spd_identical_to_working_v10": true,
+  "autopatcher_manual_entry_preserved": true,
+  "ec_update_entry": "ESC -> Boot Manager -> X380 EC update (manual)",
+  "ec_update_confirmation": "U then UPDATE; I inspects without erase/program",
+  "ec_image_sha256": "98fdf30997cf29d1c4b0568617a880e5e776c6a758d98208a51533626d37da8e",
+  "ec_program_scope": "0x1000..0x1efff, changed 128-byte rows",
+  "ec_preserved_ranges": [
+    "0x0000..0x0fff",
+    "0x1f000..0x1ffff"
+  ],
+  "ec_compatibility_gate": "all 2432 boot bytes outside 0x200..0x87f; target slot must be FF; reject 64KiB alias; recheck under reset before writing",
+  "ec_checks": [
+    "embedded SHA256",
+    "board/firmware/LPC/SPI",
+    "LPC EC window",
+    "AC and battery presence",
+    "pre-OS exclusive access",
+    "bounded vendor handshakes",
+    "row readback",
+    "full 128KiB comparison including preserved data"
+  ],
+  "ec_engine_hardware_tested_via_usb": true,
+  "ec_postboot_functions_user_confirmed": true,
+  "ec_integrated_app_hardware_tested": false,
+  "bios_hardware_tested": false,
+  "flashed": false,
+  "ec_source_identical_to_proven_usb_engine": true,
+  "ec_application_sha256": "145e88333078f9867a84ad60894b4dc6d82889b0ef2242c99f1f2440c0de075e",
+  "ec_source_manifest": {
+    "ec_diff.h": "18575175d52c1e583b2497d9fffbf4891d8cc52e04ca114b0808ff0e911ca14d",
+    "ec_flash.c": "e51651541c2a5dd48e58cf3568e535aa6a4329063928bba638f33c6c6121974a",
+    "ec_flash.h": "5d6ff9285522a2258a4985d275e95c1e74dd13c804dd49a78d64dc0aaa289178",
+    "ec_image.h": "bb37d81c3b507eba8b5b37e0b95f85f4be637f18ba80d3e44f749e65d443de4f",
+    "ec_inspect_engine.c": "12ac09b1a35a41da04019c415ff15dd5738bec5bd4ca096afe195b62b953ff24",
+    "platform.h": "28febf8e6b2ed8c154c3d863e447248f3d8e87719f9f3878d74f0794d1c9beb4",
+    "readback_fixture.h": "b8ef6fae087ade410ed0d7ee1e06609059b67cc8d5a08346e8c82f4dea237de4",
+    "test_diff.c": "a8698487ea06421098b98a317602bca6eb76b91aac813f8c16d9727e88926202",
+    "test_ec.c": "08ab9f78db74bca0bb454013c1ddaa97da4818a3850d5490a9813b8d690e3194",
+    "test_inspect.c": "1185371beb9ab02e2b3455e0050a8d740e6d55bb05a71d7ea33217634b96677d",
+    "test_readback.c": "e8b238a7d2356cf2bea2ddec11450b47def121e30cea0fa211772eee30c7056b",
+    "X380EcInspect.c": "49dd08403bc08a29856922cea87406e3e023c0f62e5844a9e2c95161801d1689",
+    "X380EcInspect.inf": "6136e57bd8abda95e188ff033419af74148f3c037acba88090cff469682197f3",
+    "X380EcUpdate.c": "5b0640ea3300bb0712930746bde258db8c3c1fc1d0341410c8f02c9f11b95cca",
+    "X380EcUpdate.inf": "52e2227ca23b8516c668fed8f42d5ddb655c601234e28ff11b86c256de141f03"
+  },
+  "vendor_machine_code_emulation": "18 flash primitive cases and 4 platform mode functions",
+  "ec_update_performed": false,
+  "smm_no_known_ec_users": true,
+  "native_internal_scope": [
+    "bios"
+  ],
+  "usb_delivery": {
+    "delivered_at": "2026-11-02T14:42:21.8365815+08:00",
+    "source": "C:\\Users\\barryblueice\\x380-bios-analysis\\coreboot-ec-integrated",
+    "destination": "L:\\",
+    "volume_id": "\\\\?\\Volume{a4dbf0cf-d14e-11f1-9683-e0c2644edfcb}\\",
+    "archive": "C:\\Users\\barryblueice\\x380-bios-analysis\\usb-archives\\L-20261102-144221-7f206954",
+    "archived_file_count": 7,
+    "files": {
+      "coreboot.bin": "e11f266f5392f9872fdfbb3b83a7526c5e1c30adcf5b4236eaa17d63078c2c64",
+      "flash.sh": "ebf1f5910be05d0f118e9ea73e1e796875060fe935f4a95d68a478f00a8fb747",
+      "SHA256SUMS.txt": "5864797a1624704dafdb1ff64af0f5ab743dc55e1008802c67bbd129babfe189",
+      "backup.sh": "4bb4797fdd9b32d8f60cc9b2bb49b191fe4931a3b9bad6a3dfef6c79d0f0e2e5"
+    },
+    "executed_flash_script": false
+  },
+  "limitations": [
+    "Proven USB engine now integrated; this rebuilt BIOS itself has not yet been flashed or hardware tested.",
+    "No boot-block update; incompatible boot code is refused.",
+    "This ports required blobs and EC updater; vendor UEFI fixes are not automatically converted into coreboot code."
+  ],
+  "linux_script_mock_tests_passed": 6,
+  "currently_programmed": false,
+  "delivery_directory": "C:\\Users\\barryblueice\\x380-bios-analysis\\coreboot-ec-integrated",
+  "user_confirmed_working_baseline": "coreboot-vendor-refresh BIOS and e29d893b USB EC updater",
+  "ec_hardware_evidence": "evidence/ec-runtime-success.json",
+  "later_battery_report": {
+    "user_statement": "刷了coreboot后才出现，拔掉适配器自己关机",
+    "general_all_normal_confirmation_not_battery_validation": true,
+    "root_cause": "not established; firmware transport/init and hardware/charging still under investigation",
+    "evidence": "C:\\Users\\barryblueice\\x380-bios-analysis\\battery-diagnostics\\findings.json"
+  }
+}

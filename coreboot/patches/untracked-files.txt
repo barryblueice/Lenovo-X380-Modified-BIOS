@@ -1,0 +1,7 @@
+src/mainboard/lenovo/sklkbl_thinkpad/variants/x380_yoga/autopatcher.c
+src/mainboard/lenovo/sklkbl_thinkpad/variants/x380_yoga/autopatcher.h
+src/mainboard/lenovo/sklkbl_thinkpad/variants/x380_yoga/autopatcher.txt
+src/mainboard/lenovo/sklkbl_thinkpad/variants/x380_yoga/autopatcher_ec.c
+tests/data/x380-autopatcher-bank57.hex
+tests/mainboard/Makefile.mk
+tests/mainboard/x380-autopatcher-test.c

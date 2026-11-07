@@ -1,0 +1,10 @@
+# X380 Yoga (BIOS ID R0SET57W) - custom patch set
+# Derived from the patch principles in digmorepaka/thinkpad-firmware-patches
+# Advanced menu: replace the hidden formset GUID with the visible one
+32442D09-1D11-4E27-8AAB-90FE6ACB0489 10 P:04320B483CC2E14ABB16A73FADDA475F:778B1D826D24964E8E103467D56AB1BA
+
+# LenovoWmaPolicyDxe whitelist bypass
+# At PE RVA 0x684 (table exhausted / "no match" path), return EFI_SUCCESS:
+#   original: 48 8B 05 F5 1F 00 00   mov rax, [rip+0x1ff5]
+#   patched : 31 C0 E9 AD 03 00 00   xor eax,eax ; jmp 0xa38 (epilogue)
+79E0EDD7-9D1D-4F41-AE1A-F896169E5216 10 P:488B05F51F0000:31C0E9AD030000

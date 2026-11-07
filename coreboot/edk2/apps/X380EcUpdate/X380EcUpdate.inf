@@ -1,0 +1,40 @@
+[Defines]
+  INF_VERSION = 0x00010005
+  BASE_NAME = X380EcUpdate
+  FILE_GUID = C140DA7E-722B-4C81-A383-582380A05703
+  MODULE_TYPE = UEFI_APPLICATION
+  VERSION_STRING = 1.0
+  ENTRY_POINT = UefiMain
+
+[Sources]
+  X380EcUpdate.c
+  ec_flash.c
+  ec_flash.h
+  ec_image.h
+  platform.h
+
+[Packages]
+  CryptoPkg/CryptoPkg.dec
+  MdePkg/MdePkg.dec
+  MdeModulePkg/MdeModulePkg.dec
+
+[LibraryClasses]
+  BaseCryptLib
+  UefiApplicationEntryPoint
+  UefiLib
+  UefiBootServicesTableLib
+  UefiRuntimeServicesTableLib
+  BaseLib
+  BaseMemoryLib
+  MemoryAllocationLib
+  IoLib
+  PciLib
+  TimerLib
+  PrintLib
+
+[Guids]
+  gEfiSmbios3TableGuid
+  gEfiSmbiosTableGuid
+
+[Protocols]
+  gEfiMpServiceProtocolGuid

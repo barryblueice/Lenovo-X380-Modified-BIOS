@@ -1,0 +1,52 @@
+/* SPDX-License-Identifier: GPL-2.0-only OR MIT */
+
+#ifndef SOC_MEDIATEK_RTC_MT6359P_H
+#define SOC_MEDIATEK_RTC_MT6359P_H
+
+#include <soc/rtc_common.h>
+#include <soc/rtc_reg_common.h>
+
+/* RTC registers */
+enum {
+	RTC_BBPU_ENABLE_ALARM	= 1U << 0,
+	RTC_BBPU_SPAR_SW	= 1U << 1,
+	RTC_BBPU_RESET_SPAR	= 1U << 2,
+	RTC_BBPU_RESET_ALARM	= 1U << 3,
+	RTC_CBUSY_TIMEOUT_US = 1000000,
+};
+
+enum {
+	PMIC_RG_BANK_FQMTR_RST = 0x522,
+};
+
+enum {
+	PMIC_RG_FQMTR_DCXO26M_EN_SHIFT = 4,
+	PMIC_RG_BANK_FQMTR_RST_SHIFT = 6,
+};
+
+/* PMIC frequency meter definition */
+enum {
+	PMIC_RG_FQMTR_CKSEL	= 0x0118,
+	PMIC_RG_FQMTR_RST	= 0x013A,
+	PMIC_RG_FQMTR_CON0	= 0x0546,
+	PMIC_RG_FQMTR_WINSET	= 0x0548,
+	PMIC_RG_FQMTR_DATA	= 0x054A,
+	FQMTR_TIMEOUT_US	= 8000,
+};
+
+enum {
+	PMIC_FQMTR_FIX_CLK_26M		= 0U << 0,
+	PMIC_FQMTR_FIX_CLK_XOSC_32K_DET	= 1U << 0,
+	PMIC_FQMTR_FIX_CLK_EOSC_32K	= 2U << 0,
+	PMIC_FQMTR_FIX_CLK_RTC_32K	= 3U << 0,
+	PMIC_FQMTR_FIX_CLK_DCXO1M_CK	= 4U << 0,
+	PMIC_FQMTR_FIX_CLK_TCK_SEC	= 5U << 0,
+	PMIC_FQMTR_FIX_CLK_PMU_32K	= 6U << 0,
+	PMIC_FQMTR_CKSEL_MASK		= 7U << 0,
+};
+
+enum {
+	RTC_EOSC_CALI_TD_DEFAULT = 6U << 5,
+};
+
+#endif /* SOC_MEDIATEK_RTC_MT6359P_H */

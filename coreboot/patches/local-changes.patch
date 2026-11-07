@@ -1,0 +1,82 @@
+warning: in the working copy of 'src/drivers/intel/dtbt/dtbt.c', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/mainboard/lenovo/sklkbl_thinkpad/Kconfig', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/mainboard/lenovo/sklkbl_thinkpad/Makefile.mk', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/mainboard/lenovo/sklkbl_thinkpad/variants/x380_yoga/gpio.c', LF will be replaced by CRLF the next time Git touches it
+diff --git a/src/drivers/intel/dtbt/dtbt.c b/src/drivers/intel/dtbt/dtbt.c
+index 7f9433df..2cf7ee18 100644
+--- a/src/drivers/intel/dtbt/dtbt.c
++++ b/src/drivers/intel/dtbt/dtbt.c
+@@ -39,7 +39,7 @@ static bool dtbt_cmd(struct device *dev, u8 command, u32 data, u32 timeout)
+ 	/* Clear valid bit */
+ 	pci_write_config32(dev, PCIE2TBT, 0);
+ 	/* Wait for done bit to be cleared */
+-	if (!wait_ms(timeout, (status = pci_read_config32(dev, TBT2PCIE)) & TBT2PCIE_DONE)) {
++	if (!wait_ms(timeout, !((status = pci_read_config32(dev, TBT2PCIE)) & TBT2PCIE_DONE))) {
+ 		printk(BIOS_ERR, "dTBT command 0x%x clear valid bit timeout, status 0x%x\n",
+ 		       command, status);
+ 		return false;
+diff --git a/src/mainboard/lenovo/sklkbl_thinkpad/Kconfig b/src/mainboard/lenovo/sklkbl_thinkpad/Kconfig
+index a544def2..20c89404 100644
+--- a/src/mainboard/lenovo/sklkbl_thinkpad/Kconfig
++++ b/src/mainboard/lenovo/sklkbl_thinkpad/Kconfig
+@@ -134,4 +134,15 @@ config VARIANT_HAS_DGPU
+ 	select DRIVERS_PCIE_GENERIC
+ 	bool
+ 
++config X380_AUTOPATCHER
++	bool "Build X380 Yoga autopatcher maintenance interfaces"
++	depends on BOARD_LENOVO_X380_YOGA
++	default n
++	help
++	  Build the reconstructed Lenovo EEPROM maintenance logic and EC
++	  transport. This does not register a boot hook or run any operation.
++	  A separate, explicit maintenance caller is required. The original
++	  template overwrites an entire EEPROM bank, including non-SVP data.
++	  Hardware compatibility and persistence have not been validated.
++
+ endif
+diff --git a/src/mainboard/lenovo/sklkbl_thinkpad/Makefile.mk b/src/mainboard/lenovo/sklkbl_thinkpad/Makefile.mk
+index 0804d413..e1c108d0 100644
+--- a/src/mainboard/lenovo/sklkbl_thinkpad/Makefile.mk
++++ b/src/mainboard/lenovo/sklkbl_thinkpad/Makefile.mk
+@@ -9,6 +9,8 @@ ramstage-$(CONFIG_VARIANT_HAS_DGPU) += dgpu.c
+ ramstage-y += variants/$(VARIANT_DIR)/gpio.c
+ ramstage-y += variants/$(VARIANT_DIR)/hda_verb.c
+ ramstage-y += ramstage.c
++ramstage-$(CONFIG_X380_AUTOPATCHER) += variants/x380_yoga/autopatcher.c
++ramstage-$(CONFIG_X380_AUTOPATCHER) += variants/x380_yoga/autopatcher_ec.c
+ ramstage-$(CONFIG_MAINBOARD_USE_LIBGFXINIT) += variants/$(VARIANT_DIR)/gma-mainboard.ads
+ 
+ subdirs-y += variants/$(VARIANT_DIR)
+diff --git a/src/mainboard/lenovo/sklkbl_thinkpad/variants/x380_yoga/gpio.c b/src/mainboard/lenovo/sklkbl_thinkpad/variants/x380_yoga/gpio.c
+index cf4557e9..489f906d 100644
+--- a/src/mainboard/lenovo/sklkbl_thinkpad/variants/x380_yoga/gpio.c
++++ b/src/mainboard/lenovo/sklkbl_thinkpad/variants/x380_yoga/gpio.c
+@@ -1,5 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0-only */
+ 
++#include <delay.h>
+ #include <soc/gpio.h>
+ #include "../../variant.h"
+ 
+@@ -87,7 +88,7 @@ static const struct pad_config gpio_table[] = {
+ 	PAD_NC(GPP_C18, NONE),
+ 	PAD_NC(GPP_C19, NONE),
+ 	PAD_CFG_GPI_SCI(GPP_C20, NONE, DEEP, EDGE_SINGLE, INVERT),	/* -TBT_PLUG_EVENT */
+-	PAD_CFG_GPO(GPP_C21, 0, DEEP),					/* TBT_FORCE_PWR */
++	PAD_CFG_GPO(GPP_C21, 1, DEEP),					/* TBT_FORCE_PWR */
+ 	PAD_CFG_GPI_SCI(GPP_C22, NONE, DEEP, EDGE_SINGLE, INVERT),	/* -EC_SCI */
+ 	PAD_CFG_GPI_SCI(GPP_C23, NONE, DEEP, EDGE_SINGLE, INVERT),	/* -EC_WAKE */
+ 
+@@ -202,4 +203,11 @@ static const struct pad_config gpio_table[] = {
+ void variant_config_gpios(void)
+ {
+ 	gpio_configure_pads(gpio_table, ARRAY_SIZE(gpio_table));
++
++	/* Vendor PCD CA selects C21 and PCD CC makes FORCE_PWR active high.
++	 * Keep the controller powered for PCI enumeration; the vendor's OS
++	 * force-power service is not present in this firmware. The upstream
++	 * bridge responded within 50 ms in the board's temporary-power test.
++	 */
++	mdelay(100);
+ }
