@@ -1,6 +1,0 @@
-chip soc/example/min86
-
-	device domain 0 on
-	end
-
-end

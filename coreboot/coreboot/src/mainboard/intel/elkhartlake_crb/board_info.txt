@@ -1,5 +1,0 @@
-Vendor name: Intel
-Board name: Elkhartlake CRB
-Category: eval
-ROM protocol: SPI
-ROM socketed: n

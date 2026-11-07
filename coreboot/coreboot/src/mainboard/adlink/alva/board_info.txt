@@ -1,2 +1,0 @@
-Board name: Ampere Alva
-Category: server

@@ -1,3 +1,0 @@
-Board name: Neoverse N2
-Category: emulation
-Board URL: https://developer.arm.com/documentation/102337/latest/

@@ -25,10 +25,6 @@ Lenovo ThinkPad S1 2018 (Silver) | CN Region
 | EC Updater | Update EC firmware only | Coreboot |
 | Deguard | [Intel BootGuard bypass on Skylake/Kabylake](https://doc.coreboot.org/soc/intel/deguard.html) | Coreboot
 
-### How Does It Worked:
-
-Refer to [Wiki](https://github.com/barryblueice/Lenovo-X380-Modified-BIOS/wiki).
-
 ***
 
 ### How to build Official Modified Firmware (Under Windows):
@@ -64,6 +60,8 @@ sudo apt install -y build-essential bison flex git m4 pkg-config \
     gcc-multilib g++-multilib libc6-dev-i386 \
     gnat
 
+git clone https://github.com/coreboot/coreboot
+
 cd coreboot
 
 make crossgcc-i386 CPUS=$(nproc)
@@ -74,25 +72,40 @@ mkdir -p workspace && cd workspace
 
 git clone https://github.com/mrchromebox/edk2.git mrchromebox
 
-tar -xzf ../../../../edk2/apps.tar.gz -C mrchromebox/UefiPayloadPkg/Application
-ls mrchromebox/UefiPayloadPkg/Application
+```
+
+2. Copy edk2 Patched file:
 
 ```
-2. Edited `mrchromebox/UefiPayloadPkg/UefiPayloadPkg.dsc`:
+tar -xzf edk2-patched/apps.tar.gz -C coreboot/mrchromebox/UefiPayloadPkg/Application
+ls coreboot/mrchromebox/UefiPayloadPkg/Application
+
+```
+
+2. Configured coreboot make option:
+
+```
+make menuconfig
+```
+
+3. Edited `mrchromebox/UefiPayloadPkg/UefiPayloadPkg.dsc`:
 
 ```
 # Add to end-of-file:
+
 UefiPayloadPkg/Application/X380Autopatcher/X380Autopatcher.inf
 UefiPayloadPkg/Application/X380EcUpdate/X380EcUpdate.inf
 ```
 
-3. Edited `mrchromebox/UefiPayloadPkg/UefiPayloadPkg.fdf`:
+4. Edited `mrchromebox/UefiPayloadPkg/UefiPayloadPkg.fdf`:
 
 ```
+# Add to end-of-file:
+
 INF UefiPayloadPkg/Application/X380Autopatcher/X380Autopatcher.inf
 INF UefiPayloadPkg/Application/X380EcUpdate/X380EcUpdate.inf
 ```
-4. Edited `mrchromebox/UefiPayloadPkg/Library/PlatformBootManagerLib/PlatformBootManager.c`, add below code before `// Register iPXE ...`:
+5. Edited `mrchromebox/UefiPayloadPkg/Library/PlatformBootManagerLib/PlatformBootManager.c`, add below code before `// Register iPXE ...`:
 
 ```
   {
@@ -108,7 +121,7 @@ INF UefiPayloadPkg/Application/X380EcUpdate/X380EcUpdate.inf
 ```
 The GUID must be completed the same as the FILE_GUID in the .inf file (EC = …5703, Autopatcher = …5701).
 
-5. Build EDK2 payload:
+6. Build EDK2 payload:
 
 ```
 cd coreboot/payloads/external/edk2/workspace
@@ -132,7 +145,7 @@ Build/UefiPayloadPkgX64/RELEASE_GCC/X64/UefiPayloadPkg/Application/X380EcUpdate/
 Build/UefiPayloadPkgX64/RELEASE_GCC/X64/UefiPayloadPkg/Application/X380Autopatcher/X380Autopatcher/OUTPUT/X380Autopatcher.efi
 ```
 
-6. Testing （Optional）:
+7. Testing （Optional）:
 
 ```
 cd coreboot/payloads/external/edk2/workspace/mrchromebox
@@ -147,7 +160,7 @@ gcc -O2 -fshort-wchar -I MdePkg/Include -I MdePkg/Include/X64 \
     UefiPayloadPkg/Application/X380EcUpdate/ec_flash.c -o /tmp/test-ec && /tmp/test-ec
 ```
 
-7. Build coreboot:
+8. Build coreboot:
 
 ```
 cd coreboot

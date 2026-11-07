@@ -1,3 +1,0 @@
-chip soc/intel/elkhartlake
-	device cpu_cluster 0 on end
-end

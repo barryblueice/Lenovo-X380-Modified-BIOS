@@ -1,4 +1,0 @@
-## SPDX-License-Identifier: GPL-2.0-only
-
-config BOARD_RAPTOR_CS_TALOS_2
-	bool "Talos II"

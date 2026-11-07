@@ -1,4 +1,0 @@
-comment "Maple"
-
-config BOARD_AMD_MAPLE_STRIX_HALO
-	bool "->  Maple for Strix Halo SoC"

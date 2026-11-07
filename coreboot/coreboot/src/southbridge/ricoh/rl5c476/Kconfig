@@ -1,4 +1,0 @@
-# SPDX-License-Identifier: GPL-2.0-only
-
-config SOUTHBRIDGE_RICOH_RL5C476
-	bool

@@ -1,6 +1,0 @@
-Vendor name: Google
-Board name: Herobrine Qualcomm sc7280 reference board
-Category: eval
-ROM protocol: SPI
-ROM socketed: n
-Flashrom support: y

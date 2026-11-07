@@ -1,6 +1,0 @@
-chip soc/intel/meteorlake
-
-        device domain 0 on
-        end
-
-end

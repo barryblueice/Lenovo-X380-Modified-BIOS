@@ -1,2 +1,0 @@
-config BOARD_ASROCK_H370M_ITX
-	bool "H370M-ITX/ac"

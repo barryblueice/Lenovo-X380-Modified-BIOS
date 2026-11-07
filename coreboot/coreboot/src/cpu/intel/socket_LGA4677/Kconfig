@@ -1,2 +1,0 @@
-config CPU_INTEL_SOCKET_LGA4677
-	bool

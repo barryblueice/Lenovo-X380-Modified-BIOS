@@ -1,2 +1,0 @@
-Board name: L140CU
-Release year: 2020

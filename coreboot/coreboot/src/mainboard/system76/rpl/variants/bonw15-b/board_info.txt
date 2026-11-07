@@ -1,2 +1,0 @@
-Board name: bonw15-b
-Release year: 2024

@@ -1,4 +1,0 @@
-## SPDX-License-Identifier: GPL-2.0-only
-
-config VENDOR_RAPTOR_CS
-	bool "Raptor Computing Systems"
