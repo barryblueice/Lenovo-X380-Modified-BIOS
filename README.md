@@ -1,6 +1,7 @@
 # This is an unofficial project for cracking / reverse-engineering Lenovo X380 Yoga BIOS
 
 Base on newest BIOS version [v1.41 from Lenovo Official](https://pcsupport.lenovo.com/us/en/products/laptops-and-netbooks/thinkpad-x-series-laptops/thinkpad-x380-yoga/downloads/driver-list/component?name=BIOS%2FUEFI&id=5AC6A815-321D-440E-8833-B07A93E0428C).
+ Includes official modified & coreboot.
 
 ### Current supported model:
 
@@ -9,9 +10,26 @@ Supported model | Notes
 Lenovo ThinkPad X380 Yoga (Black) | Global Region
 Lenovo ThinkPad S1 2018 (Silver) | CN Region
 
-> [!WARNING]
+> [!CAUTION]
 > All firmware need to use SPI programmer to burn in.<br>
-> Burning modified firmware is a risky operation that may cause hardware damage. If you are afraid, then **DON'T DO IT**.
+> Burning modified firmware is a risky operation that may cause hardware damage. If you are afraid to brick your device, **DON'T DO IT**.
+
+> [!WARNING]
+> Not Recommend use coreboot BIOS as daily use. Deguard will cause some sensors mounted under ISH may not worked. For example:
+>
+> - Sensors on LCD (maybe Environmental light sensor and lid closure sensor)
+> - KXCJ9-1008 Accelerometer
+> - KX023-1025 Accelerometer
+> - KB9022 PS2 Interface
+> - NFC Module
+> - Smart Card Module
+> - LOGO LED
+>
+>These functions may work abnormally:
+> - Gravity-sensing screen rotation
+> - NFC & Smart Card Insert detected
+> - Breathing light under S3/S4
+> - LCD Cover/Flip Cover Detection
 
 ***
 
@@ -30,7 +48,8 @@ Lenovo ThinkPad S1 2018 (Silver) | CN Region
 ### How to build Official Modified Firmware (Under Windows):
 
 1. Use SPI Programmer to extract your BIOS firmware:
-
+   
+<img width="731" height="480" alt="775E7448E357671BF7122B07A873BE1B" src="https://github.com/user-attachments/assets/d082ccb5-f720-4903-b6bb-f099ce3823ae" />
 
 2. Use command belowed to patch:
 
@@ -41,6 +60,8 @@ python scripts\build.py --input a.bin --mode both
 # PowerShell
 .\build.ps1 -InputImage a.bin -Mode both
 ```
+
+3. Use SPI Programmer to burn patched BIOS firmware.
 
 ***
 
